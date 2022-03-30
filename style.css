@@ -1,0 +1,45 @@
+.container {
+    padding: 100px 0;
+}
+
+#deck {
+    margin: 0 auto 50px;
+    width: 80%;
+    background: coral;
+    clear: both;
+    min-height: 1px;
+    position: relative;
+}
+
+#tiles-container {
+    display: table;
+}
+
+.tile {
+    background: cornflowerblue;
+    width: 10%;
+    height: 50px;
+    border: 1px solid #3e3e3e;
+    float: left;
+    box-sizing: border-box;
+    padding: 3px;
+}
+
+.player {
+    position: absolute;
+    background: yellow;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.moves {
+    padding: 30px;
+}
+
+.action {
+    text-align: center;
+}
