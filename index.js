@@ -68,11 +68,6 @@ const LOGICAL_TEST_APP = (function () {
         });
     };
 
-    /** @param position string '1:1' */
-    const convertPositionToCoordinates = (position) => {
-        return document.querySelector("[data-id='" + position +"']").getBoundingClientRect();
-    };
-
     const setupPlayer = () => {
         const player = `<span class="player"></span>`;
 
