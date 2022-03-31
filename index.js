@@ -20,6 +20,7 @@ const APP = (function () {
         }
 
         console.log(currentPlayerPosition);
+        /** @todo récupérer les cordonnées de la prochaine case. On calcul le centre de la case. on calcul le déplacement nécessaire au player. */
     };
 
     /** @return array */
