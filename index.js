@@ -1,4 +1,4 @@
-const APP = (function () {
+const LOGICAL_TEST_APP = (function () {
     const size = {
         horizontal: 10,
         vertical: 5
@@ -110,4 +110,4 @@ const APP = (function () {
     }
 })();
 
-APP().init()
+LOGICAL_TEST_APP().init()
