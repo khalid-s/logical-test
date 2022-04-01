@@ -8,7 +8,7 @@ const LOGICAL_TEST_APP = (function () {
 
     let currentPlayerPosition = '1:1';
 
-    const updateCurrentPlayerPosition = ({x, y}) => {
+    const updatePlayerPosition = ({x, y}) => {
         const position = getCurrentPlayerPosition();
 
         if (x === null) {
@@ -19,8 +19,21 @@ const LOGICAL_TEST_APP = (function () {
             currentPlayerPosition = x + ':' + position[1];
         }
 
-        console.log(currentPlayerPosition);
-        /** @todo récupérer les cordonnées de la prochaine case. On calcul le centre de la case. on calcul le déplacement nécessaire au player. */
+        const nextPositionCoordinates = convertPositionToCoordinatesInDeck(currentPlayerPosition);
+
+        const playerElement = document.getElementById('player');
+
+        playerElement.style.top = nextPositionCoordinates.centerY + 'px';
+        playerElement.style.left = nextPositionCoordinates.centerX + 'px';
+    };
+
+    const convertPositionToCoordinatesInDeck = (position) => {
+        const coordinates = document.querySelector("[data-id='" + position +"']").getBoundingClientRect();
+        const deckCoordinates = document.getElementById('deck').getBoundingClientRect();
+        coordinates.centerX = (coordinates.x - deckCoordinates.x) + (coordinates.width * 0.5);
+        coordinates.centerY = (coordinates.y - deckCoordinates.y) + (coordinates.height * 0.5);
+
+        return coordinates;
     };
 
     /** @return array */
@@ -36,7 +49,7 @@ const LOGICAL_TEST_APP = (function () {
     const handlePlay = (event) => {
         event.preventDefault();
 
-        moves.forEach(move => {
+        moves.forEach((move, index) => {
             let newXPosition = null;
             let newYPosition = null;
 
@@ -54,7 +67,11 @@ const LOGICAL_TEST_APP = (function () {
                     newYPosition = getCurrentPlayerPosition()[1] + 1;
                     break;
             }
-            updateCurrentPlayerPosition({x: newXPosition, y: newYPosition});
+
+            /** @todo BUG lors de multiple déplacements */
+            setTimeout(() => {
+                updatePlayerPosition({x: newXPosition, y: newYPosition});
+            }, 500 * (index + 1));
         });
     };
 
@@ -69,9 +86,16 @@ const LOGICAL_TEST_APP = (function () {
     };
 
     const setupPlayer = () => {
-        const player = `<span class="player"></span>`;
+        const player = `<span id="player"></span>`;
 
         document.getElementById('deck').innerHTML += player;
+
+        const playerElement = document.getElementById('player');
+
+        const playerCoordinates = convertPositionToCoordinatesInDeck(currentPlayerPosition);
+
+        playerElement.style.top = playerCoordinates.centerY + 'px';
+        playerElement.style.left = playerCoordinates.centerX + 'px';
     };
 
     const createDeck = () => {
