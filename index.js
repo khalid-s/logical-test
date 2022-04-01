@@ -4,6 +4,8 @@ const LOGICAL_TEST_APP = (function () {
         vertical: 5
     };
 
+    const playerElement = document.getElementById('player');
+
     let moves = [];
 
     let currentPlayerPosition = '1:1';
@@ -20,8 +22,6 @@ const LOGICAL_TEST_APP = (function () {
         }
 
         const nextPositionCoordinates = convertPositionToCoordinatesInDeck(currentPlayerPosition);
-
-        const playerElement = document.getElementById('player');
 
         playerElement.style.top = nextPositionCoordinates.centerY + 'px';
         playerElement.style.left = nextPositionCoordinates.centerX + 'px';
@@ -46,30 +46,32 @@ const LOGICAL_TEST_APP = (function () {
         document.getElementById('moves').innerText += ', ' + event.target.id;
     };
 
+    const movePlayer = (move) => {
+        let newXPosition = null;
+        let newYPosition = null;
+
+        switch (move) {
+            case 'up':
+                newXPosition = getCurrentPlayerPosition()[0] - 1;
+                break;
+            case 'down':
+                newXPosition = getCurrentPlayerPosition()[0] + 1;
+                break;
+            case 'left':
+                newYPosition = getCurrentPlayerPosition()[1] - 1;
+                break;
+            case 'right':
+                newYPosition = getCurrentPlayerPosition()[1] + 1;
+                break;
+        }
+        updatePlayerPosition({x: newXPosition, y: newYPosition});
+    }
+
     const handlePlay = (event) => {
         event.preventDefault();
 
         moves.forEach((move, i) => {
-            setTimeout(() => {
-                let newXPosition = null;
-                let newYPosition = null;
-
-                switch (move) {
-                    case 'up':
-                        newXPosition = getCurrentPlayerPosition()[0] - 1;
-                        break;
-                    case 'down':
-                        newXPosition = getCurrentPlayerPosition()[0] + 1;
-                        break;
-                    case 'left':
-                        newYPosition = getCurrentPlayerPosition()[1] - 1;
-                        break;
-                    case 'right':
-                        newYPosition = getCurrentPlayerPosition()[1] + 1;
-                        break;
-                }
-                updatePlayerPosition({x: newXPosition, y: newYPosition});
-            }, i * 500);
+            setTimeout(() => movePlayer(move), i * 500);
 
         });
     };
