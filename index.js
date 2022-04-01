@@ -49,29 +49,28 @@ const LOGICAL_TEST_APP = (function () {
     const handlePlay = (event) => {
         event.preventDefault();
 
-        moves.forEach((move, index) => {
-            let newXPosition = null;
-            let newYPosition = null;
-
-            switch (move) {
-                case 'up':
-                    newXPosition = getCurrentPlayerPosition()[0] - 1;
-                    break;
-                case 'down':
-                    newXPosition = getCurrentPlayerPosition()[0] + 1;
-                    break;
-                case 'left':
-                    newYPosition = getCurrentPlayerPosition()[1] - 1;
-                    break;
-                case 'right':
-                    newYPosition = getCurrentPlayerPosition()[1] + 1;
-                    break;
-            }
-
-            /** @todo BUG lors de multiple déplacements */
+        moves.forEach((move, i) => {
             setTimeout(() => {
+                let newXPosition = null;
+                let newYPosition = null;
+
+                switch (move) {
+                    case 'up':
+                        newXPosition = getCurrentPlayerPosition()[0] - 1;
+                        break;
+                    case 'down':
+                        newXPosition = getCurrentPlayerPosition()[0] + 1;
+                        break;
+                    case 'left':
+                        newYPosition = getCurrentPlayerPosition()[1] - 1;
+                        break;
+                    case 'right':
+                        newYPosition = getCurrentPlayerPosition()[1] + 1;
+                        break;
+                }
                 updatePlayerPosition({x: newXPosition, y: newYPosition});
-            }, 500 * (index + 1));
+            }, i * 500);
+
         });
     };
 
